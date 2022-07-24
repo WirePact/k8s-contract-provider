@@ -38,7 +38,7 @@ struct Cli {
     #[clap(arg_enum, short, long, env, default_value = "local")]
     storage: StorageAdapter,
 
-    /// Then name for the Kubernetes secret in case of kubernetes storage adapter.
+    /// The name for the Kubernetes secret in case of kubernetes storage adapter.
     /// This secret contains three data entries:
     ///
     /// - `ca`: the public certificate of the "main" PKI
