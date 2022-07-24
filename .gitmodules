@@ -1,0 +1,6 @@
+[submodule "external/k8s-pki"]
+	path = external/k8s-pki
+	url = https://github.com/WirePact/k8s-pki.git
+[submodule "external/contract-repository"]
+	path = external/contract-repository
+	url = https://github.com/WirePact/k8s-contract-repository
