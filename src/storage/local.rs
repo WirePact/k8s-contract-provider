@@ -28,10 +28,17 @@ impl Storage for LocalStorage {
     async fn has_certificate(&self) -> bool {
         let cert = Path::new(LOCAL_DATA_PATH).join("cert.crt");
         let key = Path::new(LOCAL_DATA_PATH).join("cert.key");
+
+        let file_exists = cert.exists() && key.exists();
+
+        if !file_exists {
+            return false;
+        }
+
         let cert_ok = X509::from_pem(&read(&cert).await.unwrap()).is_ok();
         let key_ok = PKey::private_key_from_pem(&read(&key).await.unwrap()).is_ok();
 
-        cert.exists() && key.exists() && cert_ok && key_ok
+        cert_ok && key_ok
     }
 
     async fn store_certificate(
