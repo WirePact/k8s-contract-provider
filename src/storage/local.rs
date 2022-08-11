@@ -46,10 +46,16 @@ impl Storage for LocalStorage {
         certificate: &[u8],
         key: &[u8],
     ) -> Result<(), Box<dyn std::error::Error>> {
+        let (ca, _) = self.get_ca().await?;
         let cert_path = Path::new(LOCAL_DATA_PATH).join("cert.crt");
+        let mut cert_with_ca =
+            File::create(Path::new(LOCAL_DATA_PATH).join("cert_with_ca.crt")).await?;
         let key_path = Path::new(LOCAL_DATA_PATH).join("cert.key");
         write(cert_path, certificate).await?;
         write(key_path, key).await?;
+
+        cert_with_ca.write_all(certificate).await?;
+        cert_with_ca.write_all(ca.as_slice()).await?;
 
         Ok(())
     }

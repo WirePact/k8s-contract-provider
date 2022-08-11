@@ -14,6 +14,7 @@ const DOWNWARD_API_ENV: &str = "POD_NAMESPACE";
 const DOWNWARD_API_FILE: &str = "/var/run/secrets/kubernetes.io/serviceaccount/namespace";
 
 const SECRET_CERT: &str = "cert";
+const SECRET_CERT_WITH_CA: &str = "cert_with_ca";
 const SECRET_KEY: &str = "key";
 const SECRET_CHAIN: &str = "chain";
 const SECRET_CA: &str = "ca";
@@ -122,10 +123,18 @@ impl Storage for KubernetesStorage {
         certificate: &[u8],
         key: &[u8],
     ) -> Result<(), Box<dyn std::error::Error>> {
+        let (mut ca, _) = self.get_ca().await?;
         self.modify_secret(|secret| {
             let data = secret.data.get_or_insert_with(BTreeMap::default);
             data.insert(SECRET_CERT.to_string(), ByteString(certificate.to_vec()));
             data.insert(SECRET_KEY.to_string(), ByteString(key.to_vec()));
+
+            let mut total = Vec::new();
+            let mut certificate = certificate.to_vec();
+            total.append(&mut certificate);
+            total.append(&mut ca);
+
+            data.insert(SECRET_CERT_WITH_CA.to_string(), ByteString(total));
         })
         .await?;
 
