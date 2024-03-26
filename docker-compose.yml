@@ -14,7 +14,7 @@ services:
       - pki_b
 
   repo-api:
-    image: ghcr.io/wirepact/contract-api:1.1.7
+    image: ghcr.io/wirepact/contract-api:1.1.12
     environment:
       - DEBUG=true
       - PORT=8081
