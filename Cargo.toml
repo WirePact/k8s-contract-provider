@@ -15,13 +15,13 @@ openssl-sys = "0.9.102"
 parse_duration = "2.1.1"
 prost = "0.12.3"
 prost-types = "0.12.3"
-tokio = { version = "1.36.0", features = ["macros", "rt-multi-thread", "fs", "signal"] }
+tokio = { version = "1.37.0", features = ["macros", "rt-multi-thread", "fs", "signal"] }
 tonic = { version = "0.11.0", features = ["tls", "tls-roots", "tls-roots-common"] }
 tonic-types = "0.11.0"
 
 [build-dependencies]
-tokio = { version = "1.36.0", features = ["macros", "rt-multi-thread"] }
+tokio = { version = "1.37.0", features = ["macros", "rt-multi-thread"] }
 tonic-build = "0.11.0"
 
 [dev-dependencies]
-tokio = { version = "1.36.0", features = ["macros", "rt-multi-thread"] }
+tokio = { version = "1.37.0", features = ["macros", "rt-multi-thread"] }
